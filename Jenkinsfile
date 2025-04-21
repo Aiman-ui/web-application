@@ -15,6 +15,13 @@ pipeline {
                 }
             }
         }
+	stage('Clean Previous Containers') {
+            steps {
+                script {
+                    sh 'docker rm -f static-site || true'
+                }
+            }
+        }
 
         stage('Run Docker Containers') {
             steps {
