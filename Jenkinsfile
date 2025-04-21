@@ -1,41 +1,27 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Clone') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('Build Docker Image') {
-      steps {
-        script {
-          dockerImage = docker.build("kids-bed-app:${env.BUILD_ID}")
+    stages {
+        stage('Clone') {
+            steps {
+                checkout scm
+            }
         }
-      }
-    }
 
-    stage('Run Container') {
-      steps {
-        script {
-          dockerImage.run("-p 3000:3000")
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker-compose build'
+                }
+            }
         }
-      }
-    }
 
-    stage('Validation') {
-      steps {
-        sh 'curl --fail http://localhost:3000 || exit 1'
-      }
+        stage('Run Docker Containers') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
     }
-  }
-
-  post {
-    always {
-      echo "Cleaning up..."
-      sh 'docker container prune -f || true'
-      sh 'docker image prune -f || true'
-    }
-  }
 }
