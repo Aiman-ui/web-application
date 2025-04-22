@@ -3,6 +3,20 @@
 ## Overview
 
 This project serves as a practical exercise to test your DevOps skills. It involves working with a sample e-commerce web application that allows users to browse and purchase kids' beds. Your task is to apply DevOps practices to containerize the application, set up CI/CD pipelines, and ensure proper validation and testing.
+🧠 Task Summary: Real Jenkins CI Pipeline with Docker & Nginx
+
+You built a Jenkins CI pipeline that:
+
+   1. Cloned a GitHub repo
+
+   2. Built a Docker image
+
+   3. Ran a Docker container using docker-compose
+
+   4. Served a web app through Nginx
+
+   5. All automated via Jenkins pipeline
+
 
 ## Project Tasks
 
