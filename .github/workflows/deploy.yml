@@ -26,4 +26,4 @@ jobs:
 
       - name: Run Docker Compose on VM
         run: |
-          ssh root@${{ secrets.VM_HOST }} "cd /root/webapp && docker compose up -d --build"
+          ssh root@${{ secrets.VM_HOST }} "cd /root/webapp && docker-compose up -d --build"
