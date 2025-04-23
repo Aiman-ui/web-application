@@ -25,4 +25,4 @@ jobs:
           scp -r . root@${{ secrets.VM_HOST }}:/root/webapp
 
       - name: Stop old container and deploy new one
-        run: ssh root@*** "docker stop static-site || true && docker rm static-site || true && cd /root/webapp && docker-compose up -d --build --force-recreate --remove-orphans"
+        run: ssh root@${{ secrets.VM_HOST }} "docker stop static-site || true && docker rm static-site || true && cd /root/webapp && docker-compose up -d --build --force-recreate --remove-orphans"
