@@ -3,7 +3,7 @@ name: Deploy Static Website to VM
 on:
   push:
     branches:
-      - devops-branch  # or main one
+      - devops-branch  # or replace with 'main' if needed
 
 jobs:
   deploy:
@@ -23,14 +23,11 @@ jobs:
       - name: Copy Files to VM
         run: |
           scp -r . root@${{ secrets.VM_HOST }}:/root/webapp
-     
+
       - name: Stop old container and deploy new one
         run: |
           ssh root@${{ secrets.VM_HOST }} "
-            fuser -k 9090/tcp || true &&
-            docker stop static-site || true &&
-            docker rm static-site || true &&
-            cd /root/webapp &&
-            docker-compose up -d --build --force-recreate --remove-orphans
-          "
-
+            docker stop static-site || true && \
+            docker rm static-site || true && \
+            cd /root/webapp && \
+            docker-compose up -d --build --force-recreate --remove-orphans"

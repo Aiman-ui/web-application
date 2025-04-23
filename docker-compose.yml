@@ -6,5 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9090:80"
+      - "8085:80"
     container_name: static-site
