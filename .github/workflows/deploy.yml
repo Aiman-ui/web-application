@@ -24,6 +24,5 @@ jobs:
         run: |
           scp -r . root@${{ secrets.VM_HOST }}:/root/webapp
 
-      - name: Run Docker Compose on VM
-        run: |
-          ssh root@${{ secrets.VM_HOST }} "cd /root/webapp && docker-compose up -d --build"
+      - name: Stop old container and deploy new one
+        run: ssh root@*** "docker stop static-site || true && docker rm static-site || true && cd /root/webapp && docker-compose up -d --build --force-recreate --remove-orphans"
