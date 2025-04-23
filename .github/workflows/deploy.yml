@@ -1,0 +1,29 @@
+name: Deploy Static Website to VM
+
+on:
+  push:
+    branches:
+      - devops-branch  # or main one
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Copy Files to VM
+        run: |
+          scp -r . root@${{ secrets.VM_HOST }}:/root/webapp
+
+      - name: Run Docker Compose on VM
+        run: |
+          ssh root@${{ secrets.VM_HOST }} "cd /root/webapp && docker compose up -d --build"
